@@ -1,1 +1,249 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Me</title>
+  <style>
 
+    .bullet-point {
+        position: relative;
+        padding-left: 30px; 
+    }
+
+    .bullet-point::before {
+        content: "-";
+        position: absolute;
+        left: 10px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    body {
+      font-family: "Times New Roman", Times, serif;
+      background-color: #e6f7ff; 
+      margin: 0;
+      padding: 0;
+      height: 100vh; 
+      display: grid;
+      grid-template-rows: auto 3fr; 
+      grid-template-columns: 1fr; 
+      color: #003566; 
+    }
+
+    .header {
+      background-color: #90e0ef;
+      color: #003566; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      height: 100%;
+      border-bottom: 2px solid #0077b6; 
+      box-sizing: border-box;
+    }
+
+    .profile-picture {
+      width: 100px; 
+      height: 100px;
+      border-radius: 50%;
+      border: 2px solid #0077b6;
+      margin-right: 20px; 
+    }
+
+    .social-icon {
+      width: 78px; 
+      height: 60px;
+    }
+
+    .social-icon-linked {
+      width: 74px; 
+      height: 56px;
+    }
+
+    .header-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .name {
+      font-size: 28px; 
+      font-weight: bold;
+      color: #005f73;
+      margin: 0;
+    }
+
+    .description {
+      font-size: 16px;
+      color: #333333;
+      margin-top: 10px;
+      line-height: 1.4;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 1fr 1fr; 
+      gap: 20px;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .section {
+        background-color: #ffffff;
+        border: 2px solid #0077b6;
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-size: 14px;
+        overflow: hidden;
+        align-self: start; 
+    }
+
+    .section-title {
+      font-size: 18px;
+      color: #0077b6; 
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .header-text {
+        align-items: center;
+      }
+
+      .profile-picture {
+        margin-right: 0;
+        margin-bottom: 15px;
+      }
+
+      .content {
+        grid-template-columns: 1fr; 
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <img src="img\pic.jpg" alt="Your Picture" class="profile-picture">
+    <div class="header-text">
+      <div class="name">Marc Reta</div>
+      <div class="description">
+        Hi! I'm a Computer Engineering graduate from UC San Diego, passionate about 
+        software.<br> I specialize in backend development, Internet of Things (IoT), and AI/ML 
+        projects.<br> I love building innovative solutions that make a difference.
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <!-- Professional Experience Section -->
+    <div class="section">
+      <div class="section-title">Professional Experience</div>
+      <div class="section-content">
+        <p style="font-size: 16px; margin-bottom: 3px;">
+            <a href="https://www.metro.net/" target="_blank" style="color: inherit;">
+                <strong>Los Angeles County Metropolitan Transportation Authority</strong>
+            </a> - Intern
+        </p>
+        <p class="bullet-point" style="margin-bottom: 0; margin-top: 3px"> Created the first ever digital radio log for LA Metro. I input all the 
+            radios for each 9,892 Metro employees on Microsoft Excel and updated it when there were any changes.</p>
+        <p class="bullet-point"style="margin-top: 0;"> Work together in a group to make a physical model of Los Angeles in the future that addresses the issues that
+            Los Angeles has today and provides new ideas that can help make Los Angeles a better place. Presented to the
+            CEO of Metro and thousands of employees.</p>
+
+        <p style="font-size: 16px; margin-bottom: 3px;">
+            <a href="https://www.ece.ucsd.edu/undergraduate/undergraduate-student-life/ece-undergrad-student-council/" target="_blank" style="color: inherit;">
+                <strong>ECE Undergraduate Student Council</strong>
+            </a> - President & Social Chair
+        </p>
+        <p class="bullet-point" style="margin-bottom: 0; margin-top: 3px"> Lead the first ECE Organization to host in person events during “Return to Learn”. 
+            Communicated to the school administration for permission requiring students to test for COVID-19.</p>
+            <p class="bullet-point"style="margin-bottom: 0; margin-top: 0;"> Hosted our first-ever movie theater event at AMC La Jolla 12. Doctor Stange 2 was provided to UCSD students
+            free of charge. Convinced the ECE Department to fund the theater rental.</p>
+            <p class="bullet-point"style="margin-bottom: 0; margin-top: 0;"> Actively participating and overseeing the operations of all 6 committees which include Academic, Professional,
+            Mentorship, Social, Technical, and Women in ECE events.</p>
+            <p class="bullet-point"style="margin-top: 0; margin-bottom: 18px;"> Learned how to resolve conflicts between council members through communication.</p>
+      </div>
+    </div>
+
+    <!-- Projects Section -->
+    <div class="section">
+      <div class="section-title">Projects</div>
+      <div class="section-content">
+        <p style="font-size: 16px; margin-bottom: 3px;">
+            <a href="https://github.com/CSE-112-Team-3/FoodJournal2.0" target="_blank" style="color: inherit;">
+                <strong>FoodJournal</strong>
+            </a> - A Meal Tracking App
+        </p>
+        <p class="bullet-point" style="margin-bottom: 0; margin-top: 3px"> Developed backend features using FastAPI to create routes, such as login/logout and creating/updating a post,
+            between ReactJS and Python, enabling seamless communication between the frontend and the backend.</p>
+        <p class="bullet-point"style="margin-top: 0;"> Utilized SQLAlchemy to design and implement database tables for storing users and posts, ensuring efficient
+            data management.</p>
+        <p style="font-size: 16px; margin-bottom: 3px;">
+            <a href="" target="_blank" style="color: inherit;">
+                <strong>WheelWatch</strong>
+            </a> - Smart Bike Lock
+        </p>
+        <p class="bullet-point" style="margin-bottom: 0; margin-top: 3px"> Integrated Internet of Things (IoT) features for enhanced bike security using FastAPI for backend and
+            HyperText Markup Language (HTML) for a user-friendly interface.</p>
+        <p class="bullet-point"style="margin-bottom: 0; margin-top: 0;"> Learned to transfer data between the lock and app via Bluetooth, ensuring real-time communication.</p>
+        <p class="bullet-point"style="margin-top: 0;"> Gained hands-on experience with ESP32 for hardware control of the lock's accelerometer and buzzer.</p>
+        <p style="font-size: 16px; margin-bottom: 3px;">
+            <a href="https://github.com/CSE-151A-Group-Wildfire/CSE-151A-Project" target="_blank" style="color: inherit;">
+                <strong>ClimateAI</strong>
+            </a> - Predictive Weather Analytics for Los Angeles
+        </p>
+        <p class="bullet-point" style="margin-top: 3px"> Specialized in neural network model development, including data pre-processing, input/output normalization,
+            and experimenting with layer combinations to enhance weather prediction accuracy.</p>
+      </div>
+    </div>
+
+    <!-- Awards Section -->
+    <div class="section">
+      <div class="section-title">Awards</div>
+      <div class="section-content">
+        <p style="font-size: 16px; margin-bottom: 3px;">
+            <a href="/award.html" target="_blank" style="color: inherit;">
+                <strong>2023 Undergraduate Student Service Award</strong>
+            </a> - University of California, San Diego
+        </p>
+        <p class="bullet-point" style="margin-bottom: 0; margin-top: 3px"> Issued to the select few Electrical & Computer Engineering (ECE) students who went above and beyond in their
+            efforts and work as student leaders creating a better environment for their fellow peers.</p>
+      </div>
+    </div>
+
+    <!-- Social Media Section -->
+    <div class="section">
+      <div class="section-title">Social Media</div>
+      <div class="section-content">
+        <div class="social-icons">
+            <a href="https://www.instagram.com/graydogminer/" target="_blank">
+              <img src="img\insta-icon.png" alt="Instagram" class="social-icon">
+            </a>
+            <a href="https://www.linkedin.com/in/marc-adrian-reta/" target="_blank">
+              <img src="img/linkedin-icon.svg" alt="LinkedIn" class="social-icon-linked">
+            </a>
+                        <!--
+            <a href="https://github.com/Graydogminer" target="_blank">
+              <img src="github-icon.png" alt="GitHub" class="social-icon">
+            </a>
+            -->
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

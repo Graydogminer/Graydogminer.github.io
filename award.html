@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2023 Undergraduate Student Service Award</title>
+  <style>
+    body {
+      font-family: "Times New Roman", Times, serif;
+      background-color: #e6f7ff; 
+      margin: 0;
+      padding: 0;
+      height: 100vh; 
+      display: flex;
+      flex-direction: column;
+      color: #003566; 
+    }
+
+    .header {
+      background-color: #90e0ef;
+      color: #003566; 
+      width: 100%;
+      text-align: center;
+      padding: 20px;
+      border-bottom: 2px solid #0077b6; 
+      box-sizing: border-box;
+      font-size: 28px;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      box-sizing: border-box;
+    }
+
+    .award-section {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      text-align: left;
+      background-color: #ffffff;
+      border: 2px solid #0077b6;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 900px;
+      gap: 30px;
+    }
+
+    .award-image {
+      width: 100%;
+      max-width: 350px;
+      border-radius: 8px;
+    }
+
+    .award-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .award-title {
+      font-size: 26px;
+      font-weight: bold;
+      color: #005f73;
+      margin-bottom: 20px;
+    }
+
+    .award-description {
+      font-size: 16.5px;
+      color: #333333;
+      line-height: 1.8;
+    }
+
+    a {
+      text-decoration: none;
+      color: #0077b6;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .award-section {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 90%;
+        padding: 20px;
+      }
+
+      .award-title {
+        font-size: 22px;
+      }
+
+      .award-description {
+        font-size: 16px;
+      }
+
+      .header {
+        font-size: 24px;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    2023 Undergraduate Student Service Award
+  </div>
+
+  <!-- Content Section -->
+  <div class="content">
+    <div class="award-section">
+      <img src="img/award-picture.jpg" alt="Award Picture" class="award-image">
+      <div class="award-details">
+        <div class="award-title">Awarded by the<br> University of California, San Diego</div>
+        <div class="award-description">
+          The <strong>2023 Undergraduate Student Service Award</strong> is a prestigious honor presented to a select group of 
+          Electrical and Computer Engineering (ECE) students who have gone above and beyond in their roles as student leaders. 
+          These individuals have made significant contributions to creating a better environment for their peers through 
+          exceptional dedication, innovative ideas, and inspiring leadership.
+          <a href="https://ucsd.edu" target="_blank">Learn more about UC San Diego here.</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
