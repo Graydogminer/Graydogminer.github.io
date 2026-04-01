@@ -11,6 +11,19 @@ if (modal) {
   const modalPanels = modal.querySelectorAll("[data-modal-panel]");
   const modalClose = modal.querySelector(".modal-close");
   const modalLinks = document.querySelectorAll("[data-modal-target]");
+  let scrollLockY = 0;
+
+  function lockPageScroll() {
+    scrollLockY = window.scrollY;
+    document.body.classList.add("modal-open");
+    document.body.style.top = `-${scrollLockY}px`;
+  }
+
+  function unlockPageScroll() {
+    document.body.classList.remove("modal-open");
+    document.body.style.top = "";
+    window.scrollTo(0, scrollLockY);
+  }
 
   function openModal(target, titleText) {
     modalPanels.forEach((panel) => {
@@ -18,15 +31,15 @@ if (modal) {
     });
 
     modalTitle.textContent = titleText;
+    lockPageScroll();
     modal.classList.add("is-open");
     modal.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
   }
 
   function closeModal() {
     modal.classList.remove("is-open");
     modal.setAttribute("aria-hidden", "true");
-    document.body.style.overflow = "";
+    unlockPageScroll();
     modal.querySelectorAll("video").forEach((video) => video.pause());
   }
 

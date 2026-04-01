@@ -77,6 +77,13 @@
       scrollbar-width: thin;
     }
 
+    body.modal-open {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      overflow: hidden;
+    }
+
     ::-webkit-scrollbar {
       width: 10px;
       height: 10px;
@@ -222,7 +229,8 @@
       position: fixed;
       inset: 0;
       background: rgba(0, 53, 102, 0.28);
-      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(3px);
+      backdrop-filter: blur(3px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -235,6 +243,7 @@
       pointer-events: none;
       transition: opacity 0.28s ease;
       z-index: 1000;
+      will-change: opacity;
     }
 
     .modal-overlay.is-open {
@@ -308,6 +317,8 @@
       padding: 22px;
       overflow-y: auto;
       overflow-x: hidden;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
       scrollbar-color: #7bb9d6 #edf8fc;
       scrollbar-width: thin;
     }
@@ -457,6 +468,9 @@
           calc(env(safe-area-inset-right, 0px) + 18px)
           calc(env(safe-area-inset-bottom, 0px) + 18px)
           calc(env(safe-area-inset-left, 0px) + 18px);
+        -webkit-backdrop-filter: blur(3px);
+        backdrop-filter: blur(3px);
+        background: rgba(0, 53, 102, 0.28);
       }
 
       .modal-card {
