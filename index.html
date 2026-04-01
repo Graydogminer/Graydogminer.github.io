@@ -8,6 +8,11 @@
     .bullet-point {
         position: relative;
         padding-left: 30px; 
+        padding-bottom: 6px;
+    }
+
+    .section-content > *:last-child {
+        margin-bottom: 0;
     }
 
     .bullet-point::before {
@@ -18,10 +23,44 @@
 
     a {
         text-decoration: none;
+        transition: color 0.2s ease, opacity 0.2s ease;
     }
 
     a:hover {
         text-decoration: underline;
+    }
+
+    @keyframes headerTextReveal {
+      from {
+        opacity: 0.45;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes profilePop {
+      from {
+        opacity: 0;
+        transform: scale(0.94);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes cardReveal {
+      from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.99);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     body {
@@ -34,6 +73,27 @@
       grid-template-rows: auto 3fr; 
       grid-template-columns: 1fr; 
       color: #003566; 
+      scrollbar-color: #7bb9d6 #dff2f8;
+      scrollbar-width: thin;
+    }
+
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #dff2f8;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #7bb9d6;
+      border-radius: 999px;
+      border: 2px solid #dff2f8;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #5fa6c9;
     }
 
     .header {
@@ -56,20 +116,17 @@
       margin-right: 20px; 
     }
 
-    .social-icon {
-      width: 78px; 
-      height: 60px;
-    }
-
-    .social-icon-linked {
-      width: 77px; 
-      height: 61px;
-    }
-
     .header-text {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+    }
+
+    .name-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: headerTextReveal 0.55s ease-out;
     }
 
     .name {
@@ -79,11 +136,36 @@
       margin: 0;
     }
 
+    .header-linkedin {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .header-linkedin img {
+      width: 20px;
+      height: 20px;
+      opacity: 0.65;
+      filter: grayscale(1);
+      transition: transform 0.25s ease, opacity 0.25s ease, filter 0.25s ease;
+    }
+
+    .header-linkedin:hover img {
+      opacity: 1;
+      filter: grayscale(0.2);
+      transform: translateY(-1px) scale(1.12);
+    }
+
     .description {
       font-size: 16px;
       color: #333333;
       margin-top: 10px;
       line-height: 1.4;
+      animation: headerTextReveal 0.7s ease-out;
+      max-width: 760px;
+    }
+
+    .description-line {
+      display: block;
     }
 
     .content {
@@ -92,6 +174,18 @@
       gap: 20px;
       padding: 20px;
       box-sizing: border-box;
+      align-items: stretch;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      height: 100%;
+    }
+
+    .column .section:last-child {
+      margin-top: auto;
     }
 
     .section {
@@ -103,13 +197,223 @@
         font-size: 14px;
         overflow: hidden;
         align-self: start; 
+        animation: cardReveal 0.55s ease-out both;
+        transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
     }
+
+    .section:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.14);
+      border-color: #0096c7;
+    }
+
+    .column .section:nth-child(1) { animation-delay: 0.06s; }
+    .column .section:nth-child(2) { animation-delay: 0.14s; }
+    .column .section:nth-child(3) { animation-delay: 0.22s; }
 
     .section-title {
       font-size: 18px;
       color: #0077b6; 
       font-weight: bold;
       margin-bottom: 10px;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 53, 102, 0.28);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      box-sizing: border-box;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.28s ease;
+      z-index: 1000;
+    }
+
+    .modal-overlay.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 1320px;
+      max-height: 96vh;
+      overflow: hidden;
+      background-color: #ffffff;
+      border: 2px solid #0077b6;
+      border-radius: 12px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+      transform: translateY(16px) scale(0.98);
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-overlay.is-open .modal-card {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .modal-header {
+      background-color: #90e0ef;
+      border-bottom: 2px solid #0077b6;
+      padding: 18px 88px 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .modal-title {
+      font-size: 26px;
+      font-weight: bold;
+      color: #005f73;
+      margin: 0;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 50%;
+      right: 22px;
+      transform: translateY(-50%);
+      border: 1px solid #0077b6;
+      background-color: #ffffff;
+      color: #0077b6;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .modal-close:hover {
+      background-color: #0077b6;
+      color: #ffffff;
+      transform: translateY(calc(-50% - 1px));
+    }
+
+    .modal-body {
+      flex: 1 1 auto;
+      min-height: 0;
+      padding: 22px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-color: #7bb9d6 #edf8fc;
+      scrollbar-width: thin;
+    }
+
+    .modal-body::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    .modal-body::-webkit-scrollbar-track {
+      background: #edf8fc;
+      border-radius: 999px;
+      margin: 10px 0;
+    }
+
+    .modal-body::-webkit-scrollbar-thumb {
+      background: #7bb9d6;
+      border-radius: 999px;
+      border: 2px solid #edf8fc;
+    }
+
+    .modal-body::-webkit-scrollbar-thumb:hover {
+      background: #5fa6c9;
+    }
+
+    .modal-panel {
+      display: none;
+    }
+
+    .modal-panel.is-active {
+      display: block;
+      animation: cardReveal 0.32s ease-out;
+    }
+
+    .detail-layout {
+      display: grid;
+      grid-template-columns: fit-content(560px) minmax(0, 1fr);
+      align-items: start;
+      gap: 22px;
+    }
+
+    .detail-media-frame {
+      width: fit-content;
+      max-width: min(100%, 560px);
+      justify-self: start;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid #c9e7f2;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      line-height: 0;
+    }
+
+    .detail-media {
+      width: auto;
+      max-width: min(100%, 560px);
+      height: auto;
+      max-height: min(72vh, 680px);
+      display: block;
+    }
+
+    .detail-video {
+      width: min(100%, 760px);
+      max-width: 100%;
+      height: auto;
+      max-height: min(76vh, 720px);
+      border-radius: 14px;
+      display: block;
+      justify-self: start;
+    }
+
+    .detail-copy {
+      flex: 1;
+      min-width: 0;
+      color: #333333;
+      line-height: 1.8;
+      font-size: 16.5px;
+    }
+
+    .detail-heading {
+      font-size: 26px;
+      font-weight: bold;
+      color: #005f73;
+      margin: 0 0 18px;
+      line-height: 1.25;
+    }
+
+    @media (max-width: 1100px) {
+      .detail-layout {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .detail-media-frame {
+        width: fit-content;
+        max-width: min(100%, 620px);
+        justify-self: center;
+      }
+
+      .detail-media {
+        width: auto;
+        max-width: min(100%, 620px);
+        max-height: 72vh;
+        justify-self: center;
+      }
+
+      .detail-video {
+        width: min(100%, 820px);
+        max-width: 100%;
+        height: auto;
+        justify-self: center;
+      }
     }
 
     @media (max-width: 768px) {
@@ -122,6 +426,10 @@
         align-items: center;
       }
 
+      .name-row {
+        justify-content: center;
+      }
+
       .profile-picture {
         margin-right: 0;
         margin-bottom: 15px;
@@ -129,6 +437,57 @@
 
       .content {
         grid-template-columns: 1fr; 
+      }
+
+      .description {
+        max-width: 100%;
+        font-size: 15px;
+      }
+
+      .description-line {
+        display: inline;
+      }
+
+      .modal-header {
+        justify-content: center;
+      }
+
+      .detail-layout {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .detail-media-frame {
+        width: fit-content;
+        max-width: min(100%, 500px);
+        border-radius: 16px;
+        justify-self: center;
+      }
+
+      .detail-media {
+        width: auto;
+        max-width: min(100%, 500px);
+        max-height: 62vh;
+        justify-self: center;
+      }
+
+      .detail-video {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        justify-self: stretch;
+      }
+
+      .detail-heading {
+        font-size: 22px;
+      }
+
+      .modal-close {
+        right: 16px;
+      }
+
+      .modal-header {
+        padding-right: 76px;
       }
     }
   </style>
@@ -138,114 +497,156 @@
   <div class="header">
     <img src="img\pic.jpg" alt="Your Picture" class="profile-picture">
     <div class="header-text">
-      <div class="name">Marc Reta</div>
+      <div class="name-row">
+        <div class="name">Marc Reta</div>
+        <a href="https://www.linkedin.com/in/marc-adrian-reta/" target="_blank" class="header-linkedin" aria-label="LinkedIn Profile">
+          <img src="img/linkedin-icon.svg" alt="LinkedIn">
+        </a>
+      </div>
       <div class="description">
-        Hi! I'm a Computer Engineering graduate from UC San Diego, passionate about 
-        software.<br> I specialize in backend development, Internet of Things (IoT), and AI/ML 
-        projects.<br> I love building innovative solutions that make a difference.
+        <span class="description-line">Hi! I'm a Software Developer at Metrolink and a Computer Engineering graduate from UC San Diego.</span>
+        <span class="description-line">I work on automation, backend systems, and diagnostic tools that help support railroad operations.</span>
+        <span class="description-line">I love building software that solves real problems and makes life easier for the people using it.</span>
       </div>
     </div>
   </div>
-
   <!-- Main Content -->
   <div class="content">
-    <!-- Professional Experience Section -->
-    <div class="section">
-      <div class="section-title">Professional Experience</div>
-      <div class="section-content">
-        <p style="font-size: 16px; margin-bottom: 3px;">
-            <a href="https://www.metro.net/" target="_blank" style="color: inherit;">
-                <strong>Los Angeles County Metropolitan Transportation Authority</strong>
-            </a> - Intern
-        </p>
-        <p class="bullet-point" style="margin-bottom: 0; margin-top: 3px"> Created the first ever digital radio log for LA Metro. I input all the 
-            radios for each 9,892 Metro employees on Microsoft Excel and updated it when there were any changes.</p>
-        <p class="bullet-point"style="margin-top: 0;"> Work together in a group to make a physical model of Los Angeles in the future that addresses the issues that
-            Los Angeles has today and provides new ideas that can help make Los Angeles a better place. Presented to the
-            CEO of Metro and thousands of employees.</p>
-
-        <p style="font-size: 16px; margin-bottom: 3px;">
-            <a href="https://www.ece.ucsd.edu/undergraduate/undergraduate-student-life/ece-undergrad-student-council/" target="_blank" style="color: inherit;">
-                <strong>ECE Undergraduate Student Council</strong>
-            </a> - President & Social Chair
-        </p>
-        <p class="bullet-point" style="margin-bottom: 0; margin-top: 3px"> Lead the first ECE Organization to host in person events during “Return to Learn”. 
-            Communicated to the school administration for permission requiring students to test for COVID-19.</p>
-            <p class="bullet-point"style="margin-bottom: 0; margin-top: 0;"> Hosted our first-ever movie theater event at AMC La Jolla 12. Doctor Stange 2 was provided to UCSD students
-            free of charge. Convinced the ECE Department to fund the theater rental.</p>
-            <p class="bullet-point"style="margin-bottom: 0; margin-top: 0;"> Actively participating and overseeing the operations of all 6 committees which include Academic, Professional,
-            Mentorship, Social, Technical, and Women in ECE events.</p>
-            <p class="bullet-point"style="margin-top: 0; margin-bottom: 18px;"> Learned how to resolve conflicts between council members through communication.</p>
+    <div class="column">
+      <!-- Professional Experience Section -->
+      <div class="section">
+        <div class="section-title">Professional Experience</div>
+        <div class="section-content">
+          <p style="font-size: 16px; margin-bottom: 3px;">
+              <a href="https://metrolinktrains.com/" target="_blank" style="color: inherit;">
+                  <strong>Metrolink</strong>
+              </a> - Software Developer
+          </p>
+          <p class="bullet-point" style="margin-bottom: 0; margin-top: 3px"> Improved efficiency of mechanical staff by independently developing a one-click installer for the Slot 10, a processor module that manages wireless communication for PTC systems. Replaced a 2-hour manual update process with a 5-minute automated solution using FastAPI, Python, JavaScript, HTML, and CSS.</p>
+          <p class="bullet-point" style="margin-bottom: 0; margin-top: 0;"> Eliminated a critical bottleneck in troubleshooting PTC system issues by designing an automated data pipeline using Apache Airflow, Python, and PostgreSQL. Transformed thousands of scattered log files into an instantly queryable database with a custom decoder handling 250+ I-ETMS message types.</p>
+          <p class="bullet-point" style="margin-bottom: 0; margin-top: 0;"> Enabled real-time log ingestion for the Airflow pipeline by building a high-performance file monitoring API using FastAPI and Windows IOCP. Achieved instant detection across 465 directories with near-zero CPU overhead, secured via JWT, AES-256 encryption, and Windows Credential Manager.</p>
+          <p class="bullet-point" style="margin-top: 0;"> Reduced reactive troubleshooting by developing a Python-based diagnostic tool that monitors 150+ locomotives via SSH which detects Cab Display Unit partition misconfigurations, accidental firmware downgrades, and I/O anomalies, then alerting staff via SMTP before issues impact train operations.</p>
+          <p style="font-size: 16px; margin-bottom: 3px;">
+              <a href="https://www.metro.net/" target="_blank" style="color: inherit;">
+                  <strong>Los Angeles County Metropolitan Transportation Authority</strong>
+              </a> - Intern
+          </p>
+          <p class="bullet-point" style="margin-bottom: 0; margin-top: 3px"> Created the first ever digital radio log for LA Metro. I input all the 
+              radios for each 9,892 Metro employees on Microsoft Excel and updated it when there were any changes.</p>
+          <p class="bullet-point" style="margin-top: 0;"> Work together in a group to make a physical model of Los Angeles in the future that addresses the issues that
+              Los Angeles has today and provides new ideas that can help make Los Angeles a better place. Presented to the
+              CEO of Metro and thousands of employees.</p>
+        </div>
+      </div>
+      <!-- Awards Section -->
+      <div class="section">
+        <div class="section-title">Awards</div>
+        <div class="section-content">
+          <p style="font-size: 16px; margin-bottom: 3px;">
+              <a href="/award.html" data-modal-target="award" style="color: inherit;">
+                  <strong>2023 Undergraduate Student Service Award</strong>
+              </a> - University of California, San Diego
+          </p>
+          <p class="bullet-point" style="margin-bottom: 0; margin-top: 3px"> Issued to the select few Electrical & Computer Engineering (ECE) students who went above and beyond in their
+              efforts and work as student leaders creating a better environment for their fellow peers.</p>
+        </div>
       </div>
     </div>
-
-    <!-- Projects Section -->
-    <div class="section">
-      <div class="section-title">Projects</div>
-      <div class="section-content">
-        <p style="font-size: 16px; margin-bottom: 3px;">
-            <a href="https://github.com/CSE-112-Team-3/FoodJournal2.0" target="_blank" style="color: inherit;">
-                <strong>FoodJournal</strong>
-            </a> - A Meal Tracking App
-        </p>
-        <p class="bullet-point" style="margin-bottom: 0; margin-top: 3px"> Developed backend features using FastAPI to create routes, such as login/logout and creating/updating a post,
-            between ReactJS and Python, enabling seamless communication between the frontend and the backend.</p>
-        <p class="bullet-point"style="margin-top: 0;"> Utilized SQLAlchemy to design and implement database tables for storing users and posts, ensuring efficient
-            data management.</p>
-        <p style="font-size: 16px; margin-bottom: 3px;">
-            <a href="/wheelwatch.html" target="_blank" style="color: inherit;">
-                <strong>WheelWatch</strong>
-            </a> - Smart Bike Lock
-        </p>
-        <p class="bullet-point" style="margin-bottom: 0; margin-top: 3px"> Integrated Internet of Things (IoT) features for enhanced bike security using FastAPI for backend and
-            HyperText Markup Language (HTML) for a user-friendly interface.</p>
-        <p class="bullet-point"style="margin-bottom: 0; margin-top: 0;"> Learned to transfer data between the lock and app via Bluetooth, ensuring real-time communication.</p>
-        <p class="bullet-point"style="margin-top: 0;"> Gained hands-on experience with ESP32 for hardware control of the lock's accelerometer and buzzer.</p>
-        <p style="font-size: 16px; margin-bottom: 3px;">
-            <a href="https://github.com/CSE-151A-Group-Wildfire/CSE-151A-Project" target="_blank" style="color: inherit;">
-                <strong>ClimateAI</strong>
-            </a> - Predictive Weather Analytics for Los Angeles
-        </p>
-        <p class="bullet-point" style="margin-top: 3px"> Specialized in neural network model development, including data pre-processing, input/output normalization,
-            and experimenting with layer combinations to enhance weather prediction accuracy.</p>
+    <div class="column">
+      <!-- Projects Section -->
+      <div class="section">
+        <div class="section-title">Projects</div>
+        <div class="section-content">
+          <p style="font-size: 16px; margin-bottom: 3px;">
+              <a href="https://github.com/CSE-112-Team-3/FoodJournal2.0" target="_blank" style="color: inherit;">
+                  <strong>FoodJournal</strong>
+              </a> - A Meal Tracking App
+          </p>
+          <p class="bullet-point" style="margin-bottom: 0; margin-top: 3px"> Developed backend features using FastAPI to create routes, such as login/logout and creating/updating a post,
+              between ReactJS and Python, enabling seamless communication between the frontend and the backend.</p>
+          <p class="bullet-point" style="margin-top: 0;"> Utilized SQLAlchemy to design and implement database tables for storing users and posts, ensuring efficient
+              data management.</p>
+          <p style="font-size: 16px; margin-bottom: 3px;">
+              <a href="/wheelwatch.html" data-modal-target="wheelwatch" style="color: inherit;">
+                  <strong>WheelWatch</strong>
+              </a> - Smart Bike Lock
+          </p>
+          <p class="bullet-point" style="margin-bottom: 0; margin-top: 3px"> Integrated Internet of Things (IoT) features for enhanced bike security using FastAPI for backend and
+              HyperText Markup Language (HTML) for a user-friendly interface.</p>
+          <p class="bullet-point" style="margin-bottom: 0; margin-top: 0;"> Learned to transfer data between the lock and app via Bluetooth, ensuring real-time communication.</p>
+          <p class="bullet-point" style="margin-top: 0;"> Gained hands-on experience with ESP32 for hardware control of the lock's accelerometer and buzzer.</p>
+          <p style="font-size: 16px; margin-bottom: 3px;">
+              <a href="https://github.com/CSE-151A-Group-Wildfire/CSE-151A-Project" target="_blank" style="color: inherit;">
+                  <strong>ClimateAI</strong>
+              </a> - Predictive Weather Analytics for Los Angeles
+          </p>
+          <p class="bullet-point" style="margin-top: 3px"> Specialized in neural network model development, including data pre-processing, input/output normalization,
+              and experimenting with layer combinations to enhance weather prediction accuracy.</p>
+        </div>
       </div>
-    </div>
-
-    <!-- Awards Section -->
-    <div class="section">
-      <div class="section-title">Awards</div>
-      <div class="section-content">
-        <p style="font-size: 16px; margin-bottom: 3px;">
-            <a href="/award.html" target="_blank" style="color: inherit;">
-                <strong>2023 Undergraduate Student Service Award</strong>
-            </a> - University of California, San Diego
-        </p>
-        <p class="bullet-point" style="margin-bottom: 0; margin-top: 3px"> Issued to the select few Electrical & Computer Engineering (ECE) students who went above and beyond in their
-            efforts and work as student leaders creating a better environment for their fellow peers.</p>
-      </div>
-    </div>
-
-    <!-- Social Media Section -->
-    <div class="section">
-      <div class="section-title">Social Media</div>
-      <div class="section-content">
-        <div class="social-icons">
-          <!--
-            <a href="https://www.instagram.com/graydogminer/" target="_blank">
-              <img src="img\insta-icon.png" alt="Instagram" class="social-icon">
-            </a>
-          -->
-            <a href="https://www.linkedin.com/in/marc-adrian-reta/" target="_blank">
-              <img src="img/linkedin-icon.svg" alt="LinkedIn" class="social-icon-linked">
-            </a>
-                        <!--
-            <a href="https://github.com/Graydogminer" target="_blank">
-              <img src="github-icon.png" alt="GitHub" class="social-icon">
-            </a>
-            -->
+      <!-- Extracurricular Activities Section -->
+      <div class="section">
+        <div class="section-title">Extracurricular Activities</div>
+        <div class="section-content">
+          <p style="font-size: 16px; margin-bottom: 3px;">
+              <a href="https://www.ece.ucsd.edu/undergraduate/undergraduate-student-life/ece-undergrad-student-council/" target="_blank" style="color: inherit;">
+                  <strong>ECE Undergraduate Student Council</strong>
+              </a> - President & Social Chair
+          </p>
+          <p class="bullet-point" style="margin-bottom: 0; margin-top: 3px"> Lead the first ECE Organization to host in person events during Return to Learn.
+              Communicated to the school administration for permission requiring students to test for COVID-19.</p>
+          <p class="bullet-point" style="margin-bottom: 0; margin-top: 0;"> Hosted our first-ever movie theater event at AMC La Jolla 12. Doctor Strange 2 was provided to UCSD students
+              free of charge. Convinced the ECE Department to fund the theater rental.</p>
+          <p class="bullet-point" style="margin-bottom: 0; margin-top: 0;"> Actively participated in and oversaw the operations of all 6 committees, including Academic, Professional,
+              Mentorship, Social, Technical, and Women in ECE events.</p>
+          <p class="bullet-point" style="margin-top: 0;"> Learned how to resolve conflicts between council members through communication.</p>
+        </div>
       </div>
     </div>
   </div>
 
+  <div class="modal-overlay" id="detail-modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-title">Details</h2>
+        <button class="modal-close" type="button">Close</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-panel" data-modal-panel="award">
+          <div class="detail-layout">
+            <div class="detail-media-frame">
+              <img src="img/award-picture.jpg" alt="Award Picture" class="detail-media">
+            </div>
+            <div class="detail-copy">
+              <h3 class="detail-heading">Awarded by the<br> University of California, San Diego</h3>
+              The <strong>2023 Undergraduate Student Service Award</strong> is a prestigious honor presented to a select group of
+              Electrical and Computer Engineering (ECE) students who have gone above and beyond in their roles as student leaders.
+              These individuals have made significant contributions to creating a better environment for their peers through
+              exceptional dedication, innovative ideas, and inspiring leadership.
+              <a href="https://ucsd.edu" target="_blank">Learn more about UC San Diego here.</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-panel" data-modal-panel="wheelwatch">
+          <div class="detail-layout">
+            <video class="detail-video" controls>
+              <source src="vid/lock.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="detail-copy">
+              <h3 class="detail-heading">Developed at the<br> University of California, San Diego</h3>
+              <strong>WheelWatch</strong> is an innovative smart bike U-lock that enhances security by detecting tampering using an accelerometer for movement detection and a wire embedded in the "U" shackle. When tampering is detected, it triggers an alarm and sends real-time notifications to users via Bluetooth Low Energy (BLE). At its core, the ESP32 microcontroller integrates dual-core processing with built-in Wi-Fi and Bluetooth to enable seamless communication between the lock's sensors, buzzer, and the user's smartphone. The IoT integration allows users to monitor and control their bike lock through a user-friendly interface, enabling features such as remote arming, disarming, and receiving safety alerts. This comprehensive system combines hardware and software to ensure robust bike protection.
+              <a href="https://github.com/Graydogminer/WheelWatch" target="_blank">Learn more about WheelWatch here.</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/main.js"></script>
 </body>
 </html>
+
+
